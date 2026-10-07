@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Trabajo escolar sobre Darwin, los pinzones de Galápagos y las aves de Bahía Blanca." />
+  <title>Aves, Darwin y evolución</title>
+  <style>
+    :root{
+      --bg:#f5f1e7;
+      --paper:#fffdf7;
+      --ink:#1d2a24;
+      --muted:#66746c;
+      --green:#1f5d45;
+      --green-2:#2f7a5b;
+      --green-soft:#dfe9df;
+      --sand:#dcc9a7;
+      --gold:#c89a45;
+      --line:#d8d1c2;
+      --shadow:0 18px 50px rgba(27,49,38,.10);
+      --radius:26px;
+      --nav-h:74px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(220,201,167,.34), transparent 27%),
+        linear-gradient(180deg,#f8f5ec 0%, #f3efe4 100%);
+      line-height:1.7;
+    }
+
+    a{color:inherit}
+    button{font:inherit}
+    img{max-width:100%;display:block}
+
+    .topline{
+      height:5px;
+      background:linear-gradient(90deg,var(--green),var(--gold),var(--green-2));
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:40;
+      background:rgba(248,245,236,.92);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid rgba(31,93,69,.12);
+    }
+
+    .nav-wrap{
+      max-width:1180px;
+      height:var(--nav-h);
+      margin:auto;
+      padding:0 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      font-weight:900;
+      letter-spacing:-.03em;
+      white-space:nowrap;
+    }
+
+    .brand-mark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:var(--green);
+      color:white;
+      display:grid;
+      place-items:center;
+      box-shadow:0 8px 22px rgba(31,93,69,.24);
+    }
+
+    .brand-mark svg{width:23px;height:23px}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      overflow-x:auto;
+      scrollbar-width:none;
+      padding:6px 0;
+    }
+    .nav-links::-webkit-scrollbar{display:none}
+
+    .nav-links a{
+      text-decoration:none;
+      color:#3f4f47;
+      font-weight:750;
+      font-size:.92rem;
+      padding:10px 13px;
+      border-radius:999px;
+      white-space:nowrap;
+      transition:.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.active{
+      color:white;
+      background:var(--green);
+    }
+
+    .hero{
+      max-width:1180px;
+      margin:0 auto;
+      min-height:calc(100vh - var(--nav-h));
+      padding:74px 22px 58px;
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      align-items:center;
+      gap:48px;
+      position:relative;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--green-soft);
+      color:var(--green);
+      font-weight:850;
+      font-size:.84rem;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    h1,h2,h3{
+      line-height:1.08;
+      letter-spacing:-.045em;
+      margin:0;
+    }
+
+    h1{
+      font-size:clamp(3rem,7vw,6.3rem);
+      max-width:760px;
+    }
+
+    h1 span{color:var(--green)}
+
+    .lead{
+      font-size:clamp(1.05rem,2vw,1.26rem);
+      max-width:720px;
+      color:#4c5a53;
+      margin:24px 0 28px;
+    }
+
+    .hero-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .btn{
+      border:0;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:850;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{
+      color:white;
+      background:var(--green);
+      box-shadow:0 12px 30px rgba(31,93,69,.22);
+    }
+    .btn-soft{
+      color:var(--green);
+      background:white;
+      border:1px solid var(--line);
+    }
+
+    .hero-art{
+      min-height:520px;
+      position:relative;
+      display:grid;
+      place-items:center;
+    }
+
+    .sun{
+      width:min(34vw,390px);
+      aspect-ratio:1;
+      border-radius:50%;
+      background:linear-gradient(145deg,#e5d3ad,#cda85d);
+      position:absolute;
+      opacity:.9;
+      box-shadow:0 25px 80px rgba(158,126,63,.16);
+    }
+
+    .bird-card{
+      width:min(92%,420px);
+      background:rgba(255,253,247,.9);
+      border:1px solid rgba(31,93,69,.14);
+      box-shadow:var(--shadow);
+      border-radius:34px;
+      padding:30px;
+      position:relative;
+      transform:rotate(-2deg);
+    }
+
+    .bird-card .mini{
+      color:var(--green);
+      font-size:.78rem;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .bird-card h3{
+      font-size:2.1rem;
+      margin:7px 0 12px;
+    }
+    .bird-card p{margin:0;color:#516057}
+    .feather{
+      font-size:5rem;
+      position:absolute;
+      right:22px;
+      top:-38px;
+      transform:rotate(18deg);
+      filter:drop-shadow(0 10px 15px rgba(0,0,0,.08));
+    }
+
+    .hero-note{
+      position:absolute;
+      right:0;
+      bottom:48px;
+      width:210px;
+      background:var(--green);
+      color:white;
+      padding:18px;
+      border-radius:20px;
+      box-shadow:0 16px 40px rgba(31,93,69,.28);
+      transform:rotate(4deg);
+      font-weight:760;
+      line-height:1.35;
+    }
+
+    main{overflow:hidden}
+
+    .section{
+      max-width:1180px;
+      margin:0 auto;
+      padding:94px 22px;
+      scroll-margin-top:calc(var(--nav-h) + 16px);
+    }
+
+    .section-alt{
+      max-width:none;
+      background:#ece7db;
+      border-block:1px solid #dfd7c7;
+    }
+    .section-alt > .inner{
+      max-width:1180px;
+      margin:auto;
+      padding:94px 22px;
+    }
+
+    .section-head{
+      max-width:820px;
+      margin-bottom:40px;
+    }
+
+    .kicker{
+      color:var(--green);
+      font-size:.8rem;
+      font-weight:950;
+      text-transform:uppercase;
+      letter-spacing:.11em;
+      margin-bottom:10px;
+    }
+
+    h2{
+      font-size:clamp(2.3rem,4.3vw,4.4rem);
+    }
+
+    .section-head p{
+      color:#526159;
+      font-size:1.08rem;
+      margin:18px 0 0;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:22px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .card{
+      background:var(--paper);
+      border:1px solid rgba(31,93,69,.12);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:0 12px 35px rgba(36,51,43,.06);
+    }
+
+    .card h3{
+      font-size:1.55rem;
+      margin-bottom:12px;
+    }
+
+    .card p{margin:0;color:#4f5d55}
+
+    .number{
+      width:42px;
+      height:42px;
+      display:grid;
+      place-items:center;
+      border-radius:14px;
+      background:var(--green);
+      color:white;
+      font-weight:950;
+      margin-bottom:18px;
+    }
+
+    .timeline{
+      position:relative;
+      margin-top:30px;
+      display:grid;
+      gap:18px;
+    }
+
+    .timeline::before{
+      content:"";
+      position:absolute;
+      left:22px;
+      top:8px;
+      bottom:8px;
+      width:2px;
+      background:#b6c7ba;
+    }
+
+    .time-item{
+      position:relative;
+      padding:0 0 0 70px;
+      min-height:54px;
+    }
+
+    .time-dot{
+      position:absolute;
+      left:9px;
+      top:2px;
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      background:var(--paper);
+      border:7px solid var(--green);
+      box-shadow:0 0 0 5px rgba(31,93,69,.09);
+    }
+
+    .time-item strong{
+      display:block;
+      color:var(--green);
+      font-size:.9rem;
+      margin-bottom:3px;
+    }
+    .time-item p{margin:0;color:#4f5d55}
+
+    .quote{
+      padding:25px 28px;
+      background:var(--green);
+      color:white;
+      border-radius:26px;
+      font-size:1.2rem;
+      font-weight:800;
+      line-height:1.45;
+      margin-top:24px;
+      box-shadow:0 16px 36px rgba(31,93,69,.18);
+    }
+
+    .beak-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-top:28px;
+    }
+
+    .beak{
+      padding:22px;
+      border-radius:22px;
+      background:#fffaf0;
+      border:1px solid #ded4c2;
+    }
+    .beak .icon{font-size:2rem;margin-bottom:10px}
+    .beak strong{display:block;margin-bottom:4px}
+    .beak p{margin:0;color:#59645e;font-size:.95rem}
+
+    .compare{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:28px;
+    }
+
+    .compare-card{
+      border-radius:24px;
+      padding:26px;
+      border:1px solid rgba(31,93,69,.13);
+      background:var(--paper);
+    }
+
+    .compare-card h3{font-size:1.8rem;margin-bottom:10px}
+    .compare-card .tag{
+      display:inline-block;
+      color:var(--green);
+      background:var(--green-soft);
+      padding:5px 9px;
+      border-radius:999px;
+      font-size:.78rem;
+      font-weight:900;
+      margin-bottom:12px;
+    }
+    .compare-card p{margin:0;color:#536159}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+      margin:30px 0 34px;
+    }
+
+    .stat{
+      background:var(--paper);
+      border:1px solid rgba(31,93,69,.12);
+      padding:20px;
+      border-radius:22px;
+    }
+    .stat b{
+      display:block;
+      font-size:2rem;
+      letter-spacing:-.04em;
+      color:var(--green);
+      line-height:1;
+      margin-bottom:7px;
+    }
+    .stat span{font-size:.9rem;color:#5d6962}
+
+    .notice{
+      border-left:5px solid var(--gold);
+      background:#fff9eb;
+      padding:20px 22px;
+      border-radius:0 20px 20px 0;
+      color:#554a35;
+      margin:28px 0;
+    }
+
+    details{
+      background:var(--paper);
+      border:1px solid rgba(31,93,69,.12);
+      border-radius:22px;
+      margin:12px 0;
+      overflow:hidden;
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      padding:20px 22px;
+      font-weight:900;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+    summary::-webkit-details-marker{display:none}
+    summary::after{
+      content:"+";
+      width:30px;
+      height:30px;
+      display:grid;
+      place-items:center;
+      border-radius:10px;
+      background:var(--green-soft);
+      color:var(--green);
+      font-size:1.2rem;
+      flex:0 0 auto;
+    }
+    details[open] summary::after{content:"–"}
+    .details-body{
+      padding:0 22px 22px;
+      color:#4f5d55;
+    }
+    .details-body p:last-child{margin-bottom:0}
+    .species{
+      font-size:.95rem;
+      line-height:1.9;
+      word-break:normal;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:var(--paper);
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:0 12px 35px rgba(36,51,43,.05);
+    }
+    th,td{
+      text-align:left;
+      vertical-align:top;
+      padding:16px 17px;
+      border-bottom:1px solid #e8e2d6;
+    }
+    th{
+      background:#e7eee8;
+      color:var(--green);
+      font-size:.88rem;
+    }
+    tr:last-child td{border-bottom:0}
+
+    .source-box{
+      margin-top:30px;
+      background:#173f31;
+      color:white;
+      border-radius:30px;
+      padding:30px;
+      box-shadow:0 18px 50px rgba(23,63,49,.24);
+    }
+
+    .source-box h3{font-size:2rem;margin-bottom:10px}
+    .source-box p{color:#d8e7dd;margin-top:0}
+
+    .source-toggle{
+      margin-top:12px;
+      background:white;
+      color:var(--green);
+      border:0;
+      border-radius:16px;
+      padding:14px 18px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .source-panel{
+      max-height:0;
+      overflow:hidden;
+      opacity:0;
+      transition:max-height .45s ease, opacity .35s ease, margin .35s ease;
+    }
+    .source-panel.open{
+      max-height:500px;
+      opacity:1;
+      margin-top:22px;
+    }
+
+    .channel-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .channel{
+      color:var(--ink);
+      background:white;
+      border-radius:18px;
+      padding:18px;
+      text-decoration:none;
+      font-weight:900;
+      transition:transform .18s ease;
+    }
+    .channel:hover{transform:translateY(-2px)}
+    .channel small{
+      display:block;
+      color:#647169;
+      font-weight:650;
+      margin-top:4px;
+    }
+
+    footer{
+      max-width:1180px;
+      margin:auto;
+      padding:24px 22px 50px;
+      color:#6f7a74;
+      font-size:.9rem;
+    }
+
+    #topBtn{
+      position:fixed;
+      right:22px;
+      bottom:22px;
+      width:52px;
+      height:52px;
+      border:0;
+      border-radius:17px;
+      background:var(--green);
+      color:white;
+      font-size:1.4rem;
+      cursor:pointer;
+      display:grid;
+      place-items:center;
+      box-shadow:0 14px 35px rgba(31,93,69,.28);
+      opacity:0;
+      pointer-events:none;
+      transform:translateY(10px);
+      transition:.22s ease;
+      z-index:60;
+    }
+    #topBtn.show{
+      opacity:1;
+      pointer-events:auto;
+      transform:none;
+    }
+
+    .progress{
+      position:fixed;
+      left:0;
+      top:5px;
+      height:3px;
+      width:0;
+      background:var(--gold);
+      z-index:100;
+    }
+
+    .smallprint{
+      font-size:.88rem;
+      color:#68756e;
+    }
+
+    @media (max-width: 900px){
+      .nav-wrap{align-items:flex-start;height:auto;padding-top:12px;padding-bottom:12px;flex-direction:column;gap:6px}
+      .nav-links{width:100%}
+      .hero{grid-template-columns:1fr;min-height:auto;padding-top:54px}
+      .hero-art{min-height:390px}
+      .sun{width:320px}
+      .hero-note{right:10px;bottom:12px}
+      .grid-2,.grid-3,.beak-grid,.compare,.channel-grid{grid-template-columns:1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .section,.section-alt>.inner{padding-top:72px;padding-bottom:72px}
+    }
+
+    @media (max-width: 620px){
+      h1{font-size:3.1rem}
+      .brand span:last-child{font-size:.95rem}
+      .hero-art{min-height:350px}
+      .bird-card{padding:24px}
+      .hero-note{width:180px;font-size:.9rem}
+      .stats{grid-template-columns:1fr 1fr}
+      th,td{padding:13px 12px;font-size:.88rem}
+      table{display:block;overflow-x:auto}
+      #topBtn{right:14px;bottom:14px}
+    }
+
+    @media (prefers-reduced-motion:reduce){
+      *{scroll-behavior:auto !important;transition:none !important}
+    }
+  </style>
+</head>
+
+<body id="inicio">
+  <div class="topline"></div>
+  <div class="progress" id="progress"></div>
+
+  <header>
+    <div class="nav-wrap">
+      <a class="brand" href="#inicio">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 15c5-1 8-5 10-10 1 4 3 6 6 7-4 1-7 3-9 7-1-2-3-3-7-4Z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span>Aves · Darwin · Bahía Blanca</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Secciones principales">
+        <a href="#darwin">Darwin</a>
+        <a href="#galapagos">Galápagos</a>
+        <a href="#seleccion">Selección natural</a>
+        <a href="#bahia">Aves de Bahía</a>
+        <a href="#inventario">Inventario</a>
+        <a href="#conservacion">Conservación</a>
+        <a href="#fuentes">Fuentes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Trabajo de Plástica · Aves</div>
+        <h1>De Darwin a las <span>aves de Bahía Blanca</span></h1>
+        <p class="lead">
+          En este trabajo junté lo que vimos sobre Charles Darwin, los pinzones de las islas Galápagos,
+          la selección natural y también la investigación de las aves que hay en Bahía Blanca.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#darwin">Empezar el recorrido ↓</a>
+          <a class="btn btn-soft" href="#bahia">Ir a aves de Bahía Blanca</a>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="bird-card">
+          <div class="feather">🪶</div>
+          <div class="mini">Idea principal</div>
+          <h3>Las aves cambian según el lugar donde viven</h3>
+          <p>
+            Los pinzones de Galápagos fueron muy importantes para entender cómo las especies pueden cambiar con el tiempo.
+            Y en Bahía Blanca también hay un montón de ambientes distintos donde viven aves muy diferentes.
+          </p>
+        </div>
+        <div class="hero-note">Una sola web para conectar todo el trabajo.</div>
+      </div>
+    </section>
+
+    <section class="section" id="darwin">
+      <div class="section-head">
+        <div class="kicker">01 · Charles Darwin</div>
+        <h2>El viaje que empezó todo</h2>
+        <p>
+          Darwin era naturalista y en 1831 se subió al HMS Beagle, un barco que iba a hacer un viaje de exploración por Sudamérica.
+          Mientras la tripulación estudiaba las costas, él podía recorrer las islas que encontraban durante el viaje.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="time-item">
+          <span class="time-dot"></span>
+          <strong>Diciembre de 1831</strong>
+          <p>Charles Darwin sube al HMS Beagle para viajar por Sudamérica.</p>
+        </div>
+        <div class="time-item">
+          <span class="time-dot"></span>
+          <strong>1835</strong>
+          <p>El barco llega a las islas Galápagos, cerca de Ecuador.</p>
+        </div>
+        <div class="time-item">
+          <span class="time-dot"></span>
+          <strong>Al volver al Reino Unido</strong>
+          <p>Darwin estudia los pinzones junto con el ornitólogo John Gould.</p>
+        </div>
+        <div class="time-item">
+          <span class="time-dot"></span>
+          <strong>1859</strong>
+          <p>Publica su teoría de la selección natural en el libro <em>El origen de las especies</em>.</p>
+        </div>
+      </div>
+
+      <div class="quote">
+        En Galápagos, Darwin encontró tortugas gigantes, iguanas marinas y varios pájaros cantores llamados pinzones.
+      </div>
+    </section>
+
+    <section class="section-alt" id="galapagos">
+      <div class="inner">
+        <div class="section-head">
+          <div class="kicker">02 · Galápagos y los pinzones</div>
+          <h2>Los picos no eran todos iguales</h2>
+          <p>
+            Cuando Darwin y John Gould compararon las aves, vieron que se parecían a un tipo de pinzón de Sudamérica.
+            Pero los pinzones de Galápagos también tenían diferencias entre ellos.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="number">1</div>
+            <h3>Tamaño</h3>
+            <p>Los pinzones de distintas islas no tenían todos el mismo tamaño.</p>
+          </div>
+          <div class="card">
+            <div class="number">2</div>
+            <h3>Pico</h3>
+            <p>La forma del pico cambiaba según el tipo de alimento disponible.</p>
+          </div>
+          <div class="card">
+            <div class="number">3</div>
+            <h3>Garras</h3>
+            <p>También encontraron diferencias en el tamaño de las garras.</p>
+          </div>
+        </div>
+
+        <div class="beak-grid">
+          <div class="beak">
+            <div class="icon">🐦</div>
+            <strong>Pico largo y fino</strong>
+            <p>Con garras afiladas, servía para atrapar y comer insectos.</p>
+          </div>
+          <div class="beak">
+            <div class="icon">🌰</div>
+            <strong>Pico grande y fuerte</strong>
+            <p>Era útil para romper alimentos duros, como las nueces.</p>
+          </div>
+          <div class="beak">
+            <div class="icon">🌵</div>
+            <strong>Otros tipos de pico</strong>
+            <p>En el segundo video aparecen picos adaptados a insectos, larvas y flores de cactus.</p>
+          </div>
+        </div>
+
+        <div class="notice">
+          El primer video explica que Darwin pensó que los pinzones habían cambiado con el tiempo desde una especie original del continente.
+          En total, 13 de las aves que llevó fueron identificadas como especies nuevas y todas tenían diferencias con respecto a un antepasado común.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="seleccion">
+      <div class="section-head">
+        <div class="kicker">03 · Peter y Rosemary Grant</div>
+        <h2>La selección natural se pudo ver en acción</h2>
+        <p>
+          El segundo video sigue el trabajo de Peter y Rosemary Grant. Ellos estudiaron durante décadas los pinzones de una isla llamada Daphne Major.
+          Medían el tamaño y la forma del pico, pesaban las aves y las marcaban para poder reconocerlas después.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>1973</b><span>Los Grant empezaron a volver todos los años.</span></div>
+        <div class="stat"><b>40 años</b><span>El estudio terminó siendo muchísimo más largo de lo que pensaban.</span></div>
+        <div class="stat"><b>13</b><span>Especies de pinzones aparecen en Galápagos.</span></div>
+        <div class="stat"><b>+80%</b><span>De los pinzones terrestres medianos murieron en la sequía de 1977.</span></div>
+      </div>
+
+      <div class="compare">
+        <div class="compare-card">
+          <span class="tag">1977 · Sequía</span>
+          <h3>Sobrevivieron mejor los de pico grande</h3>
+          <p>
+            Casi no llovió durante unos 18 meses. Las semillas pequeñas se hicieron muy escasas y quedaron alimentos más grandes y duros.
+            Los pinzones con picos grandes podían abrirlos mejor. Después, los científicos vieron que los hijos tenían en promedio
+            picos más grandes que la generación anterior.
+          </p>
+        </div>
+
+        <div class="compare-card">
+          <span class="tag">1983 · Mucha lluvia</span>
+          <h3>Después pasó al revés</h3>
+          <p>
+            Un fenómeno de El Niño trajo muchísima lluvia. Crecieron muchas plantas y, cuando volvió otra sequía, había más semillas pequeñas
+            y menos semillas grandes. Esta vez sobrevivieron mejor muchos pinzones de pico chico y sus hijos heredaron picos más chicos.
+          </p>
+        </div>
+      </div>
+
+      <div class="quote">
+        O sea: según cómo cambia el ambiente, algunas características pueden dar una ventaja para sobrevivir y reproducirse.
+        A eso Darwin lo llamó selección natural.
+      </div>
+    </section>
+
+    <section class="section-alt" id="especies">
+      <div class="inner">
+        <div class="section-head">
+          <div class="kicker">04 · Cómo aparecen especies nuevas</div>
+          <h2>No es solamente el pico</h2>
+          <p>
+            El segundo video también explica que los científicos buscaron entender por qué distintos pinzones no se reproducían entre sí.
+          </p>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <h3>El canto</h3>
+            <p>
+              Los distintos tipos de pinzones tienen cantos diferentes. En los experimentos, los machos respondían al canto de su propia especie
+              e ignoraban el de otra.
+            </p>
+          </div>
+          <div class="card">
+            <h3>La apariencia</h3>
+            <p>
+              También probaron con aves disecadas. Los machos cortejaban a hembras de su propia especie, con tamaño y pico parecidos,
+              e ignoraban a las otras.
+            </p>
+          </div>
+        </div>
+
+        <div class="notice">
+          El video explica que si dos poblaciones quedan separadas, pueden ir cambiando de forma distinta.
+          Si con el tiempo también cambian características relacionadas con la reproducción, puede llegar un momento en que ya no se reproduzcan entre ellas
+          y se conviertan en especies distintas.
+        </div>
+
+        <p class="smallprint">
+          El mismo video dice que la explicación más probable es que una sola población de pinzones llegó desde el continente hace unos dos millones de años
+          y después sus descendientes fueron ocupando distintas islas y ambientes.
+        </p>
+      </div>
+    </section>
+
+    <section class="section" id="bahia">
+      <div class="section-head">
+        <div class="kicker">05 · Aves de Bahía Blanca</div>
+        <h2>¿Cuántas especies hay?</h2>
+        <p>
+          Acá aparece un problema: depende de qué zona se esté contando. No es lo mismo mirar solamente parques de la ciudad que contar todo el Partido
+          y también el estuario.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>122</b><span>Parque de Mayo y espacios verdes conectados.</span></div>
+        <div class="stat"><b>195</b><span>Dentro de la Reserva Natural Bahía Blanca, Bahía Falsa y Bahía Verde.</span></div>
+        <div class="stat"><b>267</b><span>Reserva más una zona costera de influencia mucho más grande.</span></div>
+        <div class="stat"><b>280</b><span>Lista actual del Partido de Bahía Blanca usada en la investigación.</span></div>
+      </div>
+
+      <div class="card">
+        <h3>¿Y por qué a veces aparece el número 330?</h3>
+        <p>
+          Ese número corresponde a todo el sudoeste de la provincia de Buenos Aires. Es una región mucho más grande y abarca varios partidos.
+          Por eso no se puede decir que las 330 sean solamente de Bahía Blanca.
+        </p>
+      </div>
+
+      <div class="quote">
+        La mejor forma de decirlo es que en el Partido de Bahía Blanca hay alrededor de 280 especies registradas,
+        aunque el número puede cambiar si se agregan aves accidentales, históricas o nuevos registros.
+      </div>
+    </section>
+
+    <section class="section-alt" id="inventario">
+      <div class="inner">
+        <div class="section-head">
+          <div class="kicker">06 · Inventario</div>
+          <h2>La lista de aves de Bahía Blanca</h2>
+          <p>
+            Para no mezclar especies por cambios de nombres, esta parte conserva los nombres científicos de la clasificación que usamos en la investigación.
+            Podés abrir cada grupo para ver la lista.
+          </p>
+        </div>
+
+        <details>
+          <summary>Ñandúes, tinamúes, patos, palomas, cucos, atajacaminos, picaflores y rálidos</summary>
+          <div class="details-body species">
+            <p><strong>Rheidae y Tinamidae:</strong> <em>Rhea americana</em>; <em>Eudromia elegans</em>; <em>Nothura darwinii</em>; <em>Nothura maculosa</em>; <em>Rhynchotus rufescens</em>; <em>Nothoprocta cinerascens</em>.</p>
+            <p><strong>Chajá y Anatidae:</strong> <em>Chauna torquata</em>; <em>Dendrocygna viduata</em>; <em>Dendrocygna bicolor</em>; <em>Cygnus melancoryphus</em>; <em>Coscoroba coscoroba</em>; <em>Chloephaga picta</em>; <em>Chloephaga poliocephala</em>; <em>Chloephaga rubidiceps</em>; <em>Callonetta leucophrys</em>; <em>Spatula versicolor</em>; <em>Spatula cyanoptera</em>; <em>Spatula platalea</em>; <em>Mareca sibilatrix</em>; <em>Anas bahamensis</em>; <em>Anas georgica</em>; <em>Anas flavirostris</em>; <em>Netta peposaca</em>; <em>Heteronetta atricapilla</em>; <em>Oxyura vittata</em>.</p>
+            <p>Entre los nombres que aparecen en la guía están Cisne Cuello Negro, Coscoroba, Pato Capuchino, Pato Colorado, Pato Cuchara, Pato Overo, Pato Gargantilla, Pato Maicero y Pato Barcino.</p>
+            <p><strong>Palomas y torcazas:</strong> <em>Columba livia</em>; <em>Patagioenas picazuro</em>; <em>Patagioenas maculosa</em>; <em>Columbina picui</em>; <em>Leptotila verreauxi</em>; <em>Zenaida auriculata</em>.</p>
+            <p><strong>Cucos y parecidos:</strong> <em>Guira guira</em>; <em>Coccycua cinerea</em>; <em>Coccyzus melacoryphus</em>. El <em>Guira guira</em> es el conocido Pirincho.</p>
+            <p><strong>Atajacaminos:</strong> <em>Chordeiles nacunda</em>; <em>Systellura longirostris</em>; <em>Hydropsalis torquata</em>.</p>
+            <p><strong>Picaflores:</strong> <em>Sephanoides sephaniodes</em>; <em>Chlorostilbon lucidus</em>; <em>Leucochloris albicollis</em>.</p>
+            <p><strong>Gallinetas, pollonas y gallaretas:</strong> <em>Pardirallus sanguinolentus</em>; <em>Porphyriops melanops</em>; <em>Gallinula galeata</em>; <em>Fulica rufifrons</em>; <em>Fulica armillata</em>; <em>Fulica leucoptera</em>; <em>Laterallus spiloptera</em>.</p>
+            <p><strong>Carau:</strong> <em>Aramus guarauna</em>.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Chorlos, playeros, ostreros, gaviotas, gaviotines y aves marinas</summary>
+          <div class="details-body species">
+            <p><strong>Chorlito Ceniciento:</strong> <em>Pluvianellus socialis</em>.</p>
+            <p><strong>Paloma Antártica:</strong> <em>Chionis albus</em>. El Municipio la clasifica como escasa.</p>
+            <p><strong>Tero real:</strong> <em>Himantopus mexicanus</em>.</p>
+            <p><strong>Ostreros:</strong> <em>Haematopus palliatus</em>; <em>Haematopus ater</em>.</p>
+            <p><strong>Chorlos:</strong> <em>Pluvialis squatarola</em>; <em>Pluvialis dominica</em>; <em>Oreopholus ruficollis</em>; <em>Zonibyx modestus</em>; <em>Charadrius semipalmatus</em>; <em>Vanellus chilensis</em>; <em>Anarhynchus collaris</em>; <em>Anarhynchus falklandicus</em>.</p>
+            <p><strong>Agachona:</strong> <em>Thinocorus rumicivorus</em>. <strong>Aguatero:</strong> <em>Nycticryphes semicollaris</em>. <strong>Jacana:</strong> <em>Jacana jacana</em>.</p>
+            <p><strong>Playeros, becasinas, pitotoys y falaropos:</strong> <em>Bartramia longicauda</em>; <em>Numenius hudsonicus</em>; <em>Limosa haemastica</em>; <em>Gallinago paraguaiae</em>; <em>Phalaropus tricolor</em>; <em>Actitis macularius</em>; <em>Tringa flavipes</em>; <em>Tringa melanoleuca</em>; <em>Calidris canutus</em>; <em>Calidris himantopus</em>; <em>Calidris alba</em>; <em>Calidris bairdii</em>; <em>Calidris fuscicollis</em>; <em>Calidris melanotos</em>.</p>
+            <p><strong>Escúas:</strong> <em>Stercorarius chilensis</em>; <em>Stercorarius antarcticus</em>.</p>
+            <p><strong>Gaviotas, rayador y gaviotines:</strong> <em>Chroicocephalus maculipennis</em>; <em>Chroicocephalus cirrocephalus</em>; <em>Larus atlanticus</em>; <em>Larus dominicanus</em>; <em>Rynchops niger</em>; <em>Gelochelidon nilotica</em>; <em>Sterna trudeaui</em>; <em>Sterna hirundinacea</em>; <em>Sterna hirundo</em>; <em>Thalasseus sandvicensis</em>; <em>Thalasseus maximus</em>.</p>
+            <p><strong>Flamenco Austral:</strong> <em>Phoenicopterus chilensis</em>.</p>
+            <p><strong>Macáes:</strong> <em>Rollandia rolland</em>; <em>Podilymbus podiceps</em>; <em>Podiceps major</em>; <em>Podiceps occipitalis</em>.</p>
+            <p><strong>Pingüino de Magallanes:</strong> <em>Spheniscus magellanicus</em>.</p>
+            <p><strong>Albatros:</strong> <em>Diomedea sanfordi</em>; <em>Diomedea epomophora</em>; <em>Diomedea exulans</em>; <em>Thalassarche melanophris</em>.</p>
+            <p><strong>Paíños, petreles y pardelas:</strong> <em>Oceanites oceanicus</em>; <em>Macronectes giganteus</em>; <em>Macronectes halli</em>; <em>Fulmarus glacialoides</em>; <em>Daption capense</em>; <em>Procellaria aequinoctialis</em>; <em>Ardenna gravis</em>; <em>Ardenna grisea</em>; <em>Puffinus puffinus</em>.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Cigüeñas, cormoranes, ibis, garzas, rapaces, lechuzas y loros</summary>
+          <div class="details-body species">
+            <p><strong>Cigüeñas:</strong> <em>Ciconia maguari</em>; <em>Mycteria americana</em>.</p>
+            <p><strong>Cormoranes:</strong> <em>Nannopterum brasilianum</em>; <em>Leucocarbo magellanicus</em>; <em>Leucocarbo atriceps</em>.</p>
+            <p><strong>Cuervillos, bandurria y espátula:</strong> <em>Plegadis chihi</em>; <em>Phimosus infuscatus</em>; <em>Theristicus melanopis</em>; <em>Platalea ajaja</em>.</p>
+            <p><strong>Garzas y mirasoles:</strong> <em>Tigrisoma lineatum</em>; <em>Botaurus involucris</em>; <em>Nycticorax nycticorax</em>; <em>Syrigma sibilatrix</em>; <em>Egretta thula</em>; <em>Butorides striata</em>; <em>Ardea ibis</em>; <em>Ardea alba</em>; <em>Ardea cocoi</em>.</p>
+            <p><strong>Jotes:</strong> <em>Coragyps atratus</em>; <em>Cathartes aura</em>.</p>
+            <p><strong>Rapaces diurnas:</strong> <em>Elanus leucurus</em>; <em>Accipiter striatus</em>; <em>Circus buffoni</em>; <em>Circus cinereus</em>; <em>Buteogallus coronatus</em>; <em>Rupornis magnirostris</em>; <em>Parabuteo unicinctus</em>; <em>Geranoaetus albicaudatus</em>; <em>Geranoaetus polyosoma</em>; <em>Geranoaetus melanoleucus</em>; <em>Buteo swainsoni</em>.</p>
+            <p><strong>Lechuzas y búhos:</strong> <em>Tyto furcata</em>; <em>Athene cunicularia</em>; <em>Asio clamator</em>; <em>Asio flammeus</em>.</p>
+            <p><strong>Martines pescadores:</strong> <em>Megaceryle torquata</em>; <em>Chloroceryle americana</em>.</p>
+            <p><strong>Carpinteros:</strong> <em>Veniliornis mixtus</em>; <em>Colaptes melanochloros</em>; <em>Colaptes campestris</em>.</p>
+            <p><strong>Halcones y caranchos:</strong> <em>Spiziapteryx circumcincta</em>; <em>Caracara plancus</em>; <em>Daptrius chimango</em>; <em>Falco sparverius</em>; <em>Falco femoralis</em>; <em>Falco peregrinus</em>.</p>
+            <p><strong>Loros:</strong> <em>Myiopsitta monachus</em>; <em>Cyanoliseus patagonus</em>; <em>Thectocercus acuticaudatus</em>.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Furnáridos, cortarramas y tiránidos</summary>
+          <div class="details-body species">
+            <p><strong>Gallito:</strong> <em>Rhinocrypta lanceolata</em>.</p>
+            <p><strong>Furnáridos:</strong> <em>Geositta cunicularia</em>; <em>Drymornis bridgesii</em>; <em>Lepidocolaptes angustirostris</em>; <em>Tarphonomus certhioides</em>; <em>Furnarius rufus</em>; <em>Phleocryptes melanops</em>; <em>Upucerthia dumetaria</em>; <em>Cinclodes fuscus</em>; <em>Leptasthenura platensis</em>; <em>Leptasthenura aegithaloides</em>; <em>Phacellodomus sibilatrix</em>; <em>Anumbius annumbi</em>; <em>Coryphistera alaudina</em>; <em>Asthenes baeri</em>; <em>Asthenes hudsoni</em>; <em>Asthenes modesta</em>; <em>Asthenes pyrrholeuca</em>; <em>Limnoctites sulphuriferus</em>; <em>Cranioleuca pyrrhophia</em>; <em>Spartonoica maluroides</em>; <em>Pseudoseisura lophotes</em>; <em>Synallaxis albescens</em>.</p>
+            <p><strong>Cortarramas:</strong> <em>Phytotoma rutila</em>.</p>
+            <p><strong>Tiránidos y parecidos:</strong> <em>Tachuris rubrigastra</em>; <em>Suiriri suiriri</em>; <em>Anairetes flavirostris</em>; <em>Anairetes parulus</em>; <em>Polystictus pectoralis</em>; <em>Pseudocolopteryx acutipennis</em>; <em>Pseudocolopteryx flaviventris</em>; <em>Pseudocolopteryx citreola</em>; <em>Elaenia parvirostris</em>; <em>Elaenia albiceps</em>; <em>Serpophaga nigricans</em>; <em>Serpophaga subcristata</em>; <em>Serpophaga griseicapilla</em>; <em>Stigmatura budytoides</em>; <em>Myiophobus fasciatus</em>; <em>Sublegatus modestus</em>; <em>Pyrocephalus rubinus</em>; <em>Lessonia rufa</em>; <em>Knipolegus aterrimus</em>; <em>Knipolegus hudsoni</em>; <em>Hymenops perspicillatus</em>; <em>Satrapa icterophrys</em>; <em>Muscisaxicola maclovianus</em>; <em>Xolmis irupero</em>; <em>Neoxolmis coronatus</em>; <em>Neoxolmis rubetra</em>; <em>Neoxolmis rufiventris</em>; <em>Agriornis montanus</em>; <em>Agriornis micropterus</em>; <em>Agriornis murinus</em>; <em>Alectrurus risora</em>; <em>Machetornis rixosa</em>; <em>Pitangus sulphuratus</em>; <em>Myiodynastes maculatus</em>; <em>Empidonomus aurantioatrocristatus</em>; <em>Tyrannus melancholicus</em>; <em>Tyrannus savana</em>.</p>
+            <p>Entre los más fáciles de reconocer aparecen Tachurí Sietecolores, Cachudito, Doradito Pampeano, Fiofío Pico Corto, Piojito Gris, Piojito Vientre Amarillo, Churrinche, Pico de Plata, Monjita Blanca, Monjita Coronada, Picabuey, Benteveo, Suirirí Real y Tijereta.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Golondrinas, calandrias, zorzales, cachirlas y pájaros pequeños</summary>
+          <div class="details-body species">
+            <p><strong>Vireónidos:</strong> <em>Cyclarhis gujanensis</em>.</p>
+            <p><strong>Golondrinas:</strong> <em>Riparia riparia</em>; <em>Tachycineta leucorrhoa</em>; <em>Tachycineta leucopyga</em>; <em>Progne chalybea</em>; <em>Progne elegans</em>; <em>Progne tapera</em>; <em>Pygochelidon cyanoleuca</em>; <em>Alopochelidon fucata</em>; <em>Hirundo rustica</em>; <em>Petrochelidon pyrrhonota</em>.</p>
+            <p><strong>Tacuaritas:</strong> <em>Polioptila dumicola</em>.</p>
+            <p><strong>Ratona y ratona aperdizada:</strong> <em>Troglodytes musculus</em>; <em>Cistothorus platensis</em>.</p>
+            <p><strong>Estornino Pinto:</strong> <em>Sturnus vulgaris</em>.</p>
+            <p><strong>Calandrias:</strong> <em>Mimus patagonicus</em>; <em>Mimus saturninus</em>; <em>Mimus triurus</em>.</p>
+            <p><strong>Zorzales:</strong> <em>Turdus falcklandii</em>; <em>Turdus amaurochalinus</em>; <em>Turdus rufiventris</em>.</p>
+            <p><strong>Gorrión:</strong> <em>Passer domesticus</em>.</p>
+            <p><strong>Cachirlas:</strong> <em>Anthus chii</em>; <em>Anthus furcatus</em>; <em>Anthus chacoensis</em>; <em>Anthus correndera</em>; <em>Anthus hellmayri</em>.</p>
+            <p><strong>Fringílidos:</strong> <em>Chloris chloris</em>; <em>Carduelis carduelis</em>; <em>Spinus magellanicus</em>.</p>
+            <p><strong>Passerellidae:</strong> <em>Ammodramus humeralis</em>; <em>Zonotrichia capensis</em>.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Loicas, tordos, cardenales, jilgueros y otros</summary>
+          <div class="details-body species">
+            <p><strong>Ictéridos:</strong> <em>Leistes superciliaris</em>; <em>Leistes defilippii</em>; <em>Leistes loyca</em>; <em>Molothrus rufoaxillaris</em>; <em>Molothrus bonariensis</em>; <em>Agelaioides badius</em>; <em>Agelasticus thilius</em>; <em>Xanthopsar flavus</em>; <em>Pseudoleistes virescens</em>.</p>
+            <p><strong>Parúlidos:</strong> <em>Setophaga pitiayumi</em>.</p>
+            <p><strong>Tráupidos y parecidos:</strong> <em>Paroaria coronata</em>; <em>Paroaria capitata</em>; <em>Microspingus torquatus</em>; <em>Pipraeidea melanonota</em>; <em>Rauenia bonariensis</em>; <em>Phrygilus gayi</em>; <em>Diuca diuca</em>; <em>Rhopospina fruticeti</em>; <em>Rhopospina carbonaria</em>; <em>Poospiza ornata</em>; <em>Poospiza nigrorufa</em>; <em>Sicalis flaveola</em>; <em>Sicalis luteola</em>; <em>Embernagra platensis</em>; <em>Sporophila caerulescens</em>; <em>Catamenia analis</em>; <em>Gubernatrix cristata</em>; <em>Saltatricula multicolor</em>; <em>Saltator aurantiirostris</em>.</p>
+            <p>Entre sus nombres más conocidos están Cardenal Copete Rojo, Cardenilla, Monterita de Collar, Naranjero, Jilguero Dorado, Misto, Verdón, Corbatita y Cardenal Amarillo.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Registros especiales, ocasionales o históricos</summary>
+          <div class="details-body">
+            <p>
+              En la investigación también aparecieron registros que conviene dejar separados porque no son aves regulares:
+              <strong>Playerito Canela</strong> (<em>Calidris subruficollis</em>),
+              <strong>Vuelvepiedras</strong> (<em>Arenaria interpres</em>),
+              <strong>Ostrero Austral</strong> (<em>Haematopus leucopodus</em>),
+              <strong>Becasa Gris</strong> (<em>Limnodromus griseus</em>),
+              <strong>Playero Ala Blanca</strong> (<em>Tringa semipalmata</em>) y
+              <strong>Playero Esquimal</strong> (<em>Numenius borealis</em>).
+            </p>
+            <p>
+              También está el <strong>Milano Tijereta</strong> (<em>Elanoides forficatus</em>).
+              Un trabajo publicado en 2024 informó el primer avistaje conocido para Bahía Blanca, hecho el 10 de diciembre de 2023
+              cerca de la desembocadura del río Sauce Chico.
+            </p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" id="conservacion">
+      <div class="section-head">
+        <div class="kicker">07 · Conservación</div>
+        <h2>Algunas aves necesitan más cuidado</h2>
+        <p>
+          El estado de conservación en Argentina y el estado mundial no siempre son iguales, por eso en la investigación se aclararon por separado.
+        </p>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Ave</th>
+            <th>Situación que aparece en la investigación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Gaviota Cangrejera</strong><br><em>Larus atlanticus</em></td><td>Casi Amenazada a nivel mundial y Vulnerable en Argentina.</td></tr>
+          <tr><td><strong>Loica Pampeana</strong><br><em>Leistes defilippii</em></td><td>Vulnerable a nivel mundial y En Peligro en Argentina.</td></tr>
+          <tr><td><strong>Loro Barranquero</strong><br><em>Cyanoliseus patagonus</em></td><td>El Municipio lo considera una especie amenazada. Parque de Mayo, Av. Cabrera y Bosquecillo de Chañares son lugares importantes para ella.</td></tr>
+          <tr><td><strong>Cardenal Amarillo</strong><br><em>Gubernatrix cristata</em></td><td>En Peligro a nivel mundial.</td></tr>
+          <tr><td><strong>Tordo Amarillo</strong><br><em>Xanthopsar flavus</em></td><td>En Peligro a nivel mundial.</td></tr>
+          <tr><td><strong>Águila Coronada</strong><br><em>Buteogallus coronatus</em></td><td>En Peligro a nivel mundial.</td></tr>
+          <tr><td><strong>Chorlito Ceniciento</strong><br><em>Pluvianellus socialis</em></td><td>Vulnerable a nivel mundial y En Peligro en Argentina.</td></tr>
+          <tr><td><strong>Playero Rojizo</strong><br><em>Calidris canutus</em></td><td>Casi Amenazado a nivel mundial; la población <em>rufa</em> figura En Peligro Crítico en Argentina.</td></tr>
+          <tr><td><strong>Becasa de Mar</strong><br><em>Limosa haemastica</em></td><td>Vulnerable a nivel mundial.</td></tr>
+          <tr><td><strong>Pitotoy Chico</strong><br><em>Tringa flavipes</em></td><td>Vulnerable a nivel mundial; en Bahía Blanca aparece como común.</td></tr>
+          <tr><td><strong>Playerito Rabadilla Blanca</strong><br><em>Calidris fuscicollis</em></td><td>Vulnerable a nivel mundial y abundante en la tabla local.</td></tr>
+          <tr><td><strong>Flamenco Austral</strong><br><em>Phoenicopterus chilensis</em></td><td>Casi Amenazado a nivel mundial.</td></tr>
+          <tr><td><strong>Albatros Real del Norte</strong><br><em>Diomedea sanfordi</em></td><td>En Peligro a nivel mundial.</td></tr>
+          <tr><td><strong>Petrel Barba Blanca</strong><br><em>Procellaria aequinoctialis</em></td><td>Vulnerable a nivel mundial.</td></tr>
+          <tr><td><strong>Yetapá de Collar</strong><br><em>Alectrurus risora</em></td><td>Vulnerable a nivel mundial.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-3" style="margin-top:24px">
+        <div class="card">
+          <h3>Gaviota Cangrejera</h3>
+          <p>
+            El estuario de Bahía Blanca es muy importante para su reproducción. En 2025 se encontraron dos nuevas colonias,
+            una en Isla Trinidad y otra en Isla Ariadna.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Loica Pampeana</h3>
+          <p>
+            Necesita pastizales naturales para vivir. Esos ambientes cada vez son más chicos y están más separados.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Loro Barranquero</h3>
+          <p>
+            Miles usan los eucaliptos del Parque de Mayo como dormidero y en las barrancas de Av. Cabrera hay unas 100 parejas reproductivas por año.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-alt" id="cierre">
+      <div class="inner">
+        <div class="section-head">
+          <div class="kicker">08 · Para cerrar</div>
+          <h2>Una misma idea conecta todo</h2>
+          <p>
+            Darwin y los pinzones muestran cómo las aves pueden cambiar con el tiempo según el ambiente.
+            Y Bahía Blanca muestra algo distinto pero relacionado: en una misma zona puede haber muchísimas especies porque también hay un montón de ambientes diferentes,
+            como parques, pastizales, salitrales, marismas, islas y el estuario.
+          </p>
+        </div>
+
+        <div class="quote">
+          La lista de aves de Bahía Blanca no está cerrada para siempre. Todavía se siguen haciendo observaciones y pueden aparecer nuevos registros.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="fuentes">
+      <div class="section-head">
+        <div class="kicker">09 · Fuentes de los videos</div>
+        <h2>¿De dónde salió la información?</h2>
+        <p>
+          Para la parte de Darwin, Galápagos y los pinzones usamos los dos videos que vimos para el trabajo.
+          Acá dejo los canales para que se pueda revisar de dónde salió.
+        </p>
+      </div>
+
+      <div class="source-box">
+        <h3>Nuestra fuente de información</h3>
+        <p>Tocá el botón para ver los canales de los videos usados.</p>
+        <button class="source-toggle" id="sourceToggle" aria-expanded="false" aria-controls="sourcePanel">
+          Ver fuentes
+        </button>
+
+        <div class="source-panel" id="sourcePanel">
+          <div class="channel-grid">
+            <a class="channel" href="https://www.youtube.com/@biointeractive" target="_blank" rel="noopener noreferrer">
+              HHMI BioInteractive ↗
+              <small>Canal del video sobre la evolución de los pinzones de Galápagos.</small>
+            </a>
+            <a class="channel" href="https://www.youtube.com/@fuseschool" target="_blank" rel="noopener noreferrer">
+              FuseSchool ↗
+              <small>Canal del video sobre Darwin, los pinzones y la selección natural.</small>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Trabajo escolar sobre aves, Darwin, Galápagos y Bahía Blanca.
+  </footer>
+
+  <button id="topBtn" aria-label="Volver arriba" title="Volver arriba">↑</button>
+
+  <script>
+    const topBtn = document.getElementById('topBtn');
+    const progress = document.getElementById('progress');
+    const sourceToggle = document.getElementById('sourceToggle');
+    const sourcePanel = document.getElementById('sourcePanel');
+    const navLinks = [...document.querySelectorAll('.nav-links a')];
+    const sections = [...document.querySelectorAll('main section[id]')];
+
+    function onScroll(){
+      const y = window.scrollY;
+      topBtn.classList.toggle('show', y > 420);
+
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? (y / max) * 100 : 0;
+      progress.style.width = pct + '%';
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+
+    sourceToggle.addEventListener('click', () => {
+      const isOpen = sourcePanel.classList.toggle('open');
+      sourceToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      sourceToggle.textContent = isOpen ? 'Ocultar fuentes' : 'Ver fuentes';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting) return;
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = navLinks.find(a => a.getAttribute('href') === '#' + entry.target.id);
+        if(active) active.classList.add('active');
+      });
+    }, {rootMargin:'-35% 0px -55% 0px', threshold:0});
+
+    sections.forEach(s => observer.observe(s));
+  </script>
+</body>
+</html>
